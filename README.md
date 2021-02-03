@@ -1,4 +1,4 @@
-# ARNN - A recurrent neuronal network analysis platform
+# A recurrent neuronal network analysis platform
 
 ## Setup
 
