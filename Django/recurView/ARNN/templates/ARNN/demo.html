@@ -1,0 +1,119 @@
+{% extends 'header.html' %}
+
+{% block content %}
+{{ block.super }}
+<!--
+Pb pour la réduction des fenetres-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/static/ARNN/logo.ico"></a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggler" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <div class="col-lg-12 col-xs-12 col-md-12">
+            <div class="alert alert-warning text-center" role="alert" style="align-self: center;">
+                <h4 class="alert-heading">Demo mode</h4>
+            </div>
+        </div>
+
+    </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!-- colonne haut -->
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-lg-2 bg-secondary">
+            <div class="alert alert-dark text-center">
+                <h4 class="alert-heading">Information</h4>
+            </div>
+        </div>
+
+        <div class="col-lg-8 bg-light" style="padding-left:10px; padding-right:10px;">
+            <div class="alert alert-info text-center">
+                <h4 class="alert-heading">Networks</h4>
+            </div>
+        </div>
+
+        <div class="col-lg-2 bg-secondary">
+            <div class="alert alert-dark text-center">
+                <h4 class="alert-heading">Controls</h4>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" style="height: 100%;">
+        <div class="col-lg-2 bg-secondary" style=' padding-top: 10px;'>
+            <div id="infosNet"></div>
+        </div>
+        <div class="col-lg-8 bg-light" style='min-height: 600px; padding-top: 10px;'>
+            <div id="tabsDiv">
+                <ul class="nav nav-tabs" id="myNetworks">
+
+                </ul>
+            </div>
+            {% for plot in plots %}
+            <div class="card text-center" id="{{ plot.name }}">
+                <div class="card-header">
+                    <button type="button" class="close" aria-label="Close"
+                        onclick="$(this).closest('.card').fadeOut();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5>{{ plot.verbose_name }}</h5>
+                </div>
+                <div class="card-body">
+                    {% for part in plot.plot %}
+                    {{ part | safe }}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="col-lg-2 bg-secondary" style=' padding-top: 10px;'>
+            <div class="card" align='left'>
+                <div class="card-body">
+                    <button id="button_play" type="button" class="btn" style="font-size:24px"
+                        onclick="window.location.href='#'" data-toggle="popover" data-trigger="hover"
+                        data-placement="right" title="Hint"
+                        data-content="Click here to start or stop the current network. Note that you can only start a network if you have had at least one task. ">
+                        <i class="fas fa-play" aria-hidden="true"></i>
+                    </button>
+
+                    <button id="button_recompute" type="button" class="btn" style="font-size:24px"
+                        onclick="window.location.href='#'" data-toggle="popover" data-trigger="hover"
+                        data-placement="right" title="Hint"
+                        data-content="Click here to recompute all hte previously added observables.">
+                        <i class="fas fa-redo" aria-hidden="true"></i>
+                    </button>
+                    <br />
+                    <div data-toggle="popover" data-trigger="hover" data-placement="right" title="Hint"
+                        data-content="This menu allows you to add a new task (training or testing) to the currently loaded network. It is necessary to add at least one task to network before trying to run it.">
+                        <button id="add_task" type="button" class="btn" style="font-size:17px" data-toggle="modal"
+                            data-target="#taskModal">Add Task
+                        </button>
+                    </div>
+                    <br />
+                    <div data-toggle="popover" data-trigger="hover" data-placement="right" title="Hint"
+                        data-content="This menu allows you to add a new observable to the currently loaded network. This observable will appear as a graph in the middle section of the page and will be computed once the network will have finished his next run.">
+                        <button id="add_observable" type="button" class="btn" style="font-size:17px" data-toggle="modal"
+                            data-target="#observableModal">
+                            Add Observable
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
